@@ -34,6 +34,17 @@ const App = ({ photo, actions }: AppProps) => (
           </div>
         </div>
       </main>
+      <footer>
+        <div
+          className="fb-like"
+          data-href="https://tbc.1pete.com/"
+          data-layout="button"
+          data-action="like"
+          data-size="small"
+          data-show-faces="false"
+          data-share="true"
+        />
+      </footer>
     </div>
   </div>
 )

@@ -21,5 +21,11 @@ main {
   padding-top: 20px;
 }
 
+footer {
+  display: flex;
+  height: 60px;
+  align-items: center;
+}
+
 @import 'photoeditor';
 @import 'photopicker';
