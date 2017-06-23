@@ -1,9 +1,19 @@
+import OfflineRuntime from 'offline-plugin/runtime'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 
 import App from './containers/App'
 import configureStore from './configureStore'
+
+OfflineRuntime.install({
+  onUpdateReady: () => {
+    OfflineRuntime.applyUpdate()
+  },
+  onUpdated: () => {
+    window.location.reload()
+  },
+})
 
 const store = configureStore()
 

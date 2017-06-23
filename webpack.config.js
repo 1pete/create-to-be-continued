@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlPlugin = require('html-webpack-plugin')
+const OfflinePlugin = require('offline-plugin')
 
 const root = path.resolve()
 const dist = path.resolve('dist')
@@ -64,6 +65,13 @@ module.exports = (env) => {
   } else {
     config.plugins.push(
       new ExtractTextPlugin('styles.css'),
+      new OfflinePlugin({
+        ServiceWorker: {
+          cacheName: 'tbc',
+          events: true,
+        },
+        AppCache: false,
+      }),
       new webpack.LoaderOptionsPlugin({
         minimize: true,
       }),
