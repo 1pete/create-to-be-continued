@@ -3,5 +3,6 @@ export type Photo = {
   filterColor: string,
   filterOpacity: number,
   logoScale: number,
-  logoMargin: number,
+  logoMarginLeft: number,
+  logoMarginBottom: number,
 }

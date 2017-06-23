@@ -18,6 +18,10 @@ class PhotoEditor extends Component {
   targetPhoto: Image
   onSaveWrapper: Function
 
+  state = {
+    saving: false,
+  }
+
   constructor({ photo }: PhotoEditorProps) {
     super()
 
@@ -28,27 +32,30 @@ class PhotoEditor extends Component {
   }
 
   onSave() {
+    this.setState({ saving: true })
     html2canvas(this.container)
       .then((canvas) => {
         // FileSaver
         canvas.toBlob((blob) => {
           FileSaver.saveAs(blob, 'download.png')
+          this.setState({ saving: false })
         })
       })
   }
 
   render() {
-    const { photo: { data } } = this.props
+    const {
+      photo: {
+        data,
+        filterColor,
+        filterOpacity,
+        logoScale,
+        logoMarginLeft,
+        logoMarginBottom,
+      },
+    } = this.props
 
-    const a = {
-      filterColor: '#FFA726',
-      filterOpacity: 0.3,
-      logoScale: 15,
-      logoMarginLeft: 3,
-      logoMarginBottom: 3,
-    }
-
-    const { filterColor, filterOpacity, logoScale, logoMarginLeft, logoMarginBottom } = a
+    const { saving } = this.state
 
     return (
       <div className="photo-editor-container">
@@ -83,7 +90,8 @@ class PhotoEditor extends Component {
           <button
             className="btn btn-primary"
             onClick={this.onSaveWrapper}
-          >Save</button>
+            disabled={saving}
+          >{saving ? 'Saving...' : 'Save'}</button>
         </div>
       </div>
     )
