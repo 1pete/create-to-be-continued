@@ -2,7 +2,9 @@ const path = require('path')
 const webpack = require('webpack')
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CleanPlugin = require('clean-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const FaviconsPlugin = require('favicons-webpack-plugin')
 const HtmlPlugin = require('html-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
 
@@ -64,7 +66,14 @@ module.exports = (env) => {
     )
   } else {
     config.plugins.push(
+      new CleanPlugin(['dist'], { root }),
       new ExtractTextPlugin('styles.css'),
+      new FaviconsPlugin({
+        logo: path.resolve('src/logo.png'),
+        title: 'Create - To Be Continued',
+        prefix: 'icons/',
+        background: '#F57C00',
+      }),
       new OfflinePlugin({
         ServiceWorker: {
           cacheName: 'tbc',

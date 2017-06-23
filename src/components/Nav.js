@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Nav = () => (
-  <div className="bg-faded">
+  <div className="bg-orange">
     <div className="container">
       <nav className="navbar navbar-light">
         <span className="navbar-brand">Create - TBC</span>
