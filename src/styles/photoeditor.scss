@@ -1,0 +1,21 @@
+.photo-editor {
+  position: relative;
+
+  .target-image {
+    max-width: 100%;
+  }
+
+  .filter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+  }
+
+  .logo-image {
+    position: absolute;
+    z-index: 3;
+  }
+}

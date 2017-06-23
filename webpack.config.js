@@ -37,6 +37,10 @@ module.exports = (env) => {
           test: /\.(eot|svg|ttf|woff|woff2)$/,
           use: [{ loader: 'file-loader', options: { name: 'public/fonts/[name].[ext]' } }],
         },
+        {
+          test: /\.(png)$/,
+          use: ['base64-image-loader'],
+        },
       ],
     },
     devtool: isDev ? 'eval-source-map' : 'none',
