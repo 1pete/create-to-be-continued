@@ -1,6 +1,7 @@
 // @flow
 
 import {
+  RESET_PHOTO_DATA,
   SET_PHOTO_DATA,
 } from '../actions/photo'
 
@@ -17,6 +18,10 @@ const defaultState: Photo = {
 
 export default (state: Photo = defaultState, action: any) => {
   const { type, data } = action
+
+  if (type === RESET_PHOTO_DATA) {
+    return defaultState
+  }
 
   if (type === SET_PHOTO_DATA) {
     return { ...state, data }

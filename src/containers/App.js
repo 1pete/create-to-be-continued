@@ -7,7 +7,7 @@ import Nav from '../components/Nav'
 import PhotoEditor from '../components/photo/PhotoEditor'
 import PhotoPicker from '../components/photo/PhotoPicker'
 
-import { setPhotoData } from '../actions/photo'
+import { resetPhotoData, setPhotoData } from '../actions/photo'
 
 type AppProps = {
   photo: Object,
@@ -22,9 +22,14 @@ const App = ({ photo, actions }: AppProps) => (
         <div className="row">
           <div className="col">
             {
-              photo.data
-              ? <PhotoEditor photo={photo} />
-              : <PhotoPicker setPhotoData={actions.setPhotoData} />
+              photo.data ?
+                <PhotoEditor
+                  photo={photo}
+                  reset={actions.resetPhotoData}
+                /> :
+                <PhotoPicker
+                  setPhotoData={actions.setPhotoData}
+                />
             }
           </div>
         </div>
@@ -39,6 +44,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
+    resetPhotoData,
     setPhotoData,
   }, dispatch),
 })

@@ -10,6 +10,7 @@ import type { Photo } from '../../types'
 
 type PhotoEditorProps = {
   photo: Photo,
+  reset: Function,
 }
 
 class PhotoEditor extends Component {
@@ -53,6 +54,7 @@ class PhotoEditor extends Component {
         logoMarginLeft,
         logoMarginBottom,
       },
+      reset,
     } = this.props
 
     const { saving } = this.state
@@ -92,6 +94,10 @@ class PhotoEditor extends Component {
             onClick={this.onSaveWrapper}
             disabled={saving}
           >{saving ? 'Saving...' : 'Save'}</button>
+          <button
+            className="btn btn-danger"
+            onClick={reset}
+          >Reset</button>
         </div>
       </div>
     )
