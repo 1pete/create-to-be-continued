@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react'
 
 type PhotoPickerProps = {
@@ -6,18 +8,19 @@ type PhotoPickerProps = {
 
 class PhotoPicker extends Component {
   props: PhotoPickerProps
+  handleFileChangeWrapper: Function
 
   constructor() {
     super()
 
-    this.handleFileChange = this.handleFileChange.bind(this)
+    this.handleFileChangeWrapper = this.handleFileChange.bind(this)
   }
 
   state = {
     loading: false,
   }
 
-  handleFileChange(event: Event) {
+  handleFileChange(event: any) {
     const { target } = event
     const { files } = target
 
@@ -45,8 +48,7 @@ class PhotoPicker extends Component {
           id="input-photo-picker"
           type="file"
           accept="image/*"
-          capture="camera"
-          onChange={this.handleFileChange}
+          onChange={this.handleFileChangeWrapper}
         />
         {!loading &&
           <label htmlFor="input-photo-picker">
