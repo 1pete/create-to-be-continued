@@ -77,7 +77,11 @@ class PhotoEditor extends Component {
     )
 
     canvas.toBlob((blob) => {
-      FileSaver.saveAs(blob, 'download.png')
+      const pad = num => `${num}`.padStart(2, '0')
+      const now = new Date()
+      const date = `${now.getFullYear()}${pad(now.getMonth() + 1)}${now.getDate()}`
+      const time = `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`
+      FileSaver.saveAs(blob, `tbc_${date}_${time}.png`)
       this.setState({ saving: false })
     })
   }
