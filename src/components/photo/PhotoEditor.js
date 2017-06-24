@@ -2,11 +2,13 @@
 
 import React, { Component } from 'react'
 import FileSaver from 'file-saver'
-import html2canvas from 'html2canvas'
 
-import tbcImage from '../../contents/tbc.png'
+import tbcImageData from '../../contents/tbc.png'
 
 import type { Photo } from '../../types'
+
+const tbcImage = new Image()
+tbcImage.src = tbcImageData
 
 type PhotoEditorProps = {
   photo: Photo,
@@ -33,15 +35,51 @@ class PhotoEditor extends Component {
   }
 
   onSave() {
+    const {
+      photo: {
+        filterColor,
+        filterOpacity,
+        logoScale,
+        logoMarginLeft,
+        logoMarginBottom,
+      },
+    } = this.props
     this.setState({ saving: true })
-    html2canvas(this.container)
-      .then((canvas) => {
-        // FileSaver
-        canvas.toBlob((blob) => {
-          FileSaver.saveAs(blob, 'download.png')
-          this.setState({ saving: false })
-        })
-      })
+
+    const { width: canvasWidth, height: canvasHeight } = this.targetPhoto
+
+    const fromPercent = x => x / 100
+
+    const canvas = document.createElement('canvas')
+    canvas.width = canvasWidth
+    canvas.height = canvasHeight
+
+    const imageHeight = canvasHeight * fromPercent(logoScale)
+    const imageWidth = (tbcImage.width / tbcImage.height) * imageHeight
+
+    const ctx = canvas.getContext('2d')
+    if (ctx == null) {
+      this.setState({ saving: false })
+      return
+    }
+
+    ctx.drawImage(this.targetPhoto, 0, 0)
+    ctx.fillStyle = filterColor
+    ctx.globalAlpha = filterOpacity
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+    ctx.globalAlpha = 1
+    ctx.drawImage(
+      tbcImage,
+      canvasWidth * fromPercent(logoMarginLeft),
+      canvasHeight - (canvasHeight * fromPercent(logoMarginBottom)) - imageHeight,
+      imageWidth,
+      imageHeight,
+    )
+
+    canvas.toBlob((blob) => {
+      FileSaver.saveAs(blob, 'download.png')
+      this.setState({ saving: false })
+    })
   }
 
   render() {
@@ -78,7 +116,7 @@ class PhotoEditor extends Component {
             }}
           />
           <img
-            src={tbcImage}
+            src={tbcImageData}
             className="logo-image"
             alt=""
             style={{
