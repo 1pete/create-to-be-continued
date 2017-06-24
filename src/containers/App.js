@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import PhotoEditor from '../components/photo/PhotoEditor'
 import PhotoPicker from '../components/photo/PhotoPicker'
 
-import { resetPhotoData, setPhotoData } from '../actions/photo'
+import { resetPhotoData, setPhotoData, customizePhoto } from '../actions/photo'
 
 type AppProps = {
   photo: Object,
@@ -22,6 +22,7 @@ const App = ({ photo, actions }: AppProps) => (
               <PhotoEditor
                 photo={photo}
                 reset={actions.resetPhotoData}
+                customize={actions.customizePhoto}
               /> :
               <PhotoPicker
                 setPhotoData={actions.setPhotoData}
@@ -41,6 +42,7 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({
     resetPhotoData,
     setPhotoData,
+    customizePhoto,
   }, dispatch),
 })
 

@@ -3,6 +3,9 @@
 import React, { Component } from 'react'
 import FileSaver from 'file-saver'
 
+import PhotoCustomize from './PhotoCustomize'
+import PhotoPreview from './PhotoPreview'
+
 import tbcImageData from '../../contents/tbc.png'
 
 import type { Photo } from '../../types'
@@ -13,16 +16,18 @@ tbcImage.src = tbcImageData
 type PhotoEditorProps = {
   photo: Photo,
   reset: Function,
+  customize: Function,
 }
 
 class PhotoEditor extends Component {
   props: PhotoEditorProps
-  container: any
   targetPhoto: Image
   onSaveWrapper: Function
+  toggleCustomizeWrapper: Function
 
   state = {
     saving: false,
+    customize: false,
   }
 
   constructor({ photo }: PhotoEditorProps) {
@@ -32,6 +37,7 @@ class PhotoEditor extends Component {
     this.targetPhoto.src = photo.data
 
     this.onSaveWrapper = this.onSave.bind(this)
+    this.toggleCustomizeWrapper = this.toggleCustomize.bind(this)
   }
 
   onSave() {
@@ -86,60 +92,53 @@ class PhotoEditor extends Component {
     })
   }
 
+  toggleCustomize() {
+    this.setState({ customize: !this.state.customize })
+  }
+
   render() {
     const {
-      photo: {
-        data,
-        filterColor,
-        filterOpacity,
-        logoScale,
-        logoMarginLeft,
-        logoMarginBottom,
-      },
+      photo,
       reset,
+      customize: doCustomize,
     } = this.props
 
-    const { saving } = this.state
+    const { saving, customize } = this.state
 
     return (
       <div className="photo-editor-container">
-        <div
-          className="photo-editor"
-          ref={(node) => { this.container = node }}
-        >
-          <img
-            src={data}
-            className="target-image"
-            alt=""
-          />
-          <div
-            className="filter"
-            style={{
-              backgroundColor: filterColor,
-              opacity: filterOpacity,
-            }}
-          />
-          <img
-            src={tbcImageData}
-            className="logo-image"
-            alt=""
-            style={{
-              left: `${logoMarginLeft}%`,
-              bottom: `${logoMarginBottom}%`,
-              height: `${logoScale}%`,
-            }}
-          />
+        <div className="row">
+          <div className={customize ? 'col-lg-8' : 'col'}>
+            <PhotoPreview photo={photo} logo={tbcImageData} />
+          </div>
+          {
+            customize &&
+            <div className="col-lg-4">
+              <PhotoCustomize
+                photo={photo}
+                customize={doCustomize}
+              />
+            </div>
+          }
         </div>
-        <div className="photo-editor-actions">
-          <button
-            className="btn btn-primary"
-            onClick={this.onSaveWrapper}
-            disabled={saving}
-          >{saving ? 'Saving...' : 'Save'}</button>
-          <button
-            className="btn btn-danger"
-            onClick={reset}
-          >Reset</button>
+        <div className="row">
+          <div className="col">
+            <div className="photo-editor-actions">
+              <button
+                className="btn btn-primary"
+                onClick={this.onSaveWrapper}
+                disabled={saving}
+              >{saving ? 'Saving...' : 'Save'}</button>
+              <button
+                className={`btn btn-secondary ${customize ? 'active' : ''}`}
+                onClick={this.toggleCustomizeWrapper}
+              >{customize && 'Close'} Customize</button>
+              <button
+                className="btn btn-danger"
+                onClick={reset}
+              >Reset</button>
+            </div>
+          </div>
         </div>
       </div>
     )

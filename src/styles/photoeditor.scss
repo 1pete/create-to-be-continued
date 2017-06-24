@@ -1,5 +1,6 @@
 .photo-editor {
   position: relative;
+  overflow: hidden;
 
   .target-image {
     max-width: 100%;
@@ -17,6 +18,15 @@
   .logo-image {
     position: absolute;
     z-index: 3;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 4;
   }
 }
 
@@ -38,6 +48,30 @@
 
     @media (min-width: 576px) {
       @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $font-size-lg, $btn-border-radius-lg);
+    }
+  }
+}
+
+.photo-customize {
+  display: flex;
+  flex-direction: column;
+
+  .customize-group {
+    display: flex;
+    padding: 15px;
+
+    span {
+      flex: none;
+      width: 100px;
+    }
+
+    input {
+      flex: 1;
+      text-align: right;
+    }
+
+    input[type=color] {
+      width: 40px;
     }
   }
 }
