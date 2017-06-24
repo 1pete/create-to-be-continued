@@ -34,7 +34,7 @@ module.exports = (env) => {
           test: /\.scss$/,
           use:
             isDev
-            ? ['style-loader', 'css-loader', 'sass-loader']
+            ? ['style-loader?sourceMap', 'css-loader?sourceMap', 'sass-loader?sourceMap']
             : ExtractTextPlugin.extract({ use: ['css-loader', 'sass-loader'] }),
         },
         {
