@@ -18,7 +18,13 @@ module.exports = (env) => {
   const config = {
     context: root,
     entry: [
-      'core-js/shim',
+      'core-js/es6/array',
+      'core-js/es6/object',
+      'core-js/es6/promise',
+      'core-js/es6/string',
+      'core-js/es7/array',
+      'core-js/es7/object',
+      'core-js/es7/string',
       './src/styles/index.scss',
       './src/index',
     ],
