@@ -10,7 +10,7 @@ import type { Photo } from '../types'
 
 const defaultState: Photo = {
   data: null,
-  filterColor: '#FFA726',
+  filterColor: '#b38138',
   filterOpacity: 0.3,
   logoScale: 15,
   logoMarginLeft: 3,
